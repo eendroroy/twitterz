@@ -3,6 +3,10 @@ package com.github.eendroroy.twitterz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author indrajit
+ */
+
 @SpringBootApplication
 public class TwitterzApplication {
 
