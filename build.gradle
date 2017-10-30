@@ -1,3 +1,11 @@
+buildscript {
+    dependencies {
+        classpath 'org.postgresql:postgresql:42.1.4'
+        classpath 'org.yaml:snakeyaml:1.19'
+
+    }
+}
+
 plugins {
     id 'idea'
     id 'java'
@@ -17,6 +25,21 @@ repositories {
 
 configurations {
 	providedRuntime
+}
+
+Properties springProperties = new Properties()
+springProperties.load(project.file("$projectDir/src/main/resources/application.properties").newDataInputStream())
+
+
+liquibase {
+    activities {
+        main {
+            changeLogFile "$projectDir/src/main/resources/db/changelog/db.changelog-master.yaml"
+            url springProperties.getProperty('liquibase.url')
+            username springProperties.getProperty('liquibase.user')
+            password springProperties.getProperty('liquibase.password')
+        }
+    }
 }
 
 dependencies {
