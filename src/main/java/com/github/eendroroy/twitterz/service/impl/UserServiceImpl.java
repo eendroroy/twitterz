@@ -5,7 +5,6 @@ import com.github.eendroroy.twitterz.repository.UserRepository;
 import com.github.eendroroy.twitterz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +27,8 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private transient UserRepository userRepository;
 
-  @Autowired
-  private transient BCryptPasswordEncoder bCryptPasswordEncoder;
+//  @Autowired
+//  private transient BCryptPasswordEncoder bCryptPasswordEncoder;
 
   @Override
   public List<User> allUsers() {
@@ -47,10 +46,10 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void saveUser(User user) {
-    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+  public User saveUser(User user) {
+//    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     user.setEnabled(1);
-    userRepository.save(user);
+    return userRepository.save(user);
   }
 
   @Override
