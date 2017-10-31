@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author indrajit
@@ -24,15 +27,21 @@ public class UserController {
   @ResponseBody
   public long register(
     HttpServletRequest request, HttpServletResponse response
-  ) {
+  ) throws ParseException {
     String userName = request.getParameter("userName");
     String email = request.getParameter("email");
     String password = request.getParameter("password");
+    String date = request.getParameter("date_of_birth");
+    Date date_of_birth = null;
+    if( date != null) {
+      date_of_birth = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+    }
 
     User user = new User();
     user.setEmail(email);
-    user.setFullName(userName);
+    user.setUserName(userName);
     user.setPassword(password);
+    user.setDateOfBirth(date_of_birth);
 
     return userService.saveUser(user).getId();
   }
