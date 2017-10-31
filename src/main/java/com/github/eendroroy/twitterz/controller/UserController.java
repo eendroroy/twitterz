@@ -17,24 +17,23 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(path = "/user")
 public class UserController {
+  @Autowired
+  transient private UserService userService;
 
-    @Autowired
-    transient private UserService userService;
+  @RequestMapping(path = "register", method = RequestMethod.POST)
+  @ResponseBody
+  public long register(
+    HttpServletRequest request, HttpServletResponse response
+  ) {
+    String userName = request.getParameter("userName");
+    String email = request.getParameter("email");
+    String password = request.getParameter("password");
 
-    @RequestMapping(path = "register", method = RequestMethod.POST)
-    @ResponseBody
-    public long register(
-            HttpServletRequest request, HttpServletResponse response
-    ) {                                 
-        String userName = request.getParameter("userName");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+    User user = new User();
+    user.setEmail(email);
+    user.setFullName(userName);
+    user.setPassword(password);
 
-        User user = new User();
-        user.setEmail(email);
-        user.setFullName(userName);
-        user.setPassword(password);
-
-        return userService.saveUser(user).getId();
-    }
+    return userService.saveUser(user).getId();
+  }
 }
