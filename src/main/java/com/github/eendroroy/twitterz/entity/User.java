@@ -19,7 +19,6 @@ import java.util.Date;
 @Table(name = "users")
 @Data
 public class User {
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id")
@@ -34,6 +33,9 @@ public class User {
   @Length(min = 5, message = "*Your password must have at least 5 characters")
   @NotEmpty(message = "*Please provide your password")
   private String password;
+
+  @Column(name = "access_token")
+  private String accessToken;
 
   @Column(name = "fullname")
   @NotEmpty(message = "*Please provide your full name")

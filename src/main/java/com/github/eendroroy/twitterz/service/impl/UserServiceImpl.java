@@ -1,5 +1,6 @@
 package com.github.eendroroy.twitterz.service.impl;
 
+import com.github.eendroroy.twitterz.security.PasswordEncoder;
 import com.github.eendroroy.twitterz.entity.User;
 import com.github.eendroroy.twitterz.repository.UserRepository;
 import com.github.eendroroy.twitterz.service.UserService;
@@ -27,8 +28,9 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private transient UserRepository userRepository;
 
-//  @Autowired
-//  private transient BCryptPasswordEncoder bCryptPasswordEncoder;
+  @Qualifier("encoder")
+  @Autowired
+  PasswordEncoder.Encoder passwordEncoder;
 
   @Override
   public List<User> allUsers() {
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User saveUser(User user) {
-//    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setEnabled(1);
     return userRepository.save(user);
   }
@@ -56,5 +58,10 @@ public class UserServiceImpl implements UserService {
   public User currentUser() {
     // TODO: implement
     return null;
+  }
+
+  @Override
+  public User findUserByToken(String token) {
+    return userRepository.findByAccessToken(token);
   }
 }
