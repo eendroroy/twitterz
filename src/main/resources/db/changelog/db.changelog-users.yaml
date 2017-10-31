@@ -18,6 +18,7 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: password_salt
                   type: varchar(255)
@@ -27,17 +28,18 @@ databaseChangeLog:
                   name: access_token
                   type: varchar(255)
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: fullname
                   type: varchar(255)
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: username
                   type: varchar(255)
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: date_of_birth
                   type: date

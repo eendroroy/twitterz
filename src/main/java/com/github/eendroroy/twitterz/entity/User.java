@@ -20,11 +20,12 @@ import java.util.Date;
 @Data
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="user_id_seq")
+  @SequenceGenerator(name="user_id_seq", sequenceName="users_user_id_seq", allocationSize=1)
   @Column(name = "user_id")
   private long id;
 
-  @Column(name = "email")
+  @Column(name = "email", unique = true)
   @Email(message = "*Please provide a valid Email")
   @NotEmpty(message = "*Please provide an email")
   private String email;
@@ -38,10 +39,10 @@ public class User {
   private String accessToken;
 
   @Column(name = "fullname")
-  @NotEmpty(message = "*Please provide your full name")
   private String fullName;
 
-  @Column(name = "username")
+  @Column(name = "username", unique = true)
+  @NotEmpty(message = "*Please provide your username")
   private String userName;
 
   @Column(name = "date_of_birth")
@@ -50,8 +51,8 @@ public class User {
   @Past(message = "*Date of birth can not be in future")
   private Date dateOfBirth;
 
-  @Column(name = "enabled")
-  private int enabled;
+  @Column(name = "active")
+  private int active;
 
   public Date getDateOfBirth() {
     if (dateOfBirth == null) {
